@@ -1,0 +1,27 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @book.title
+
+p
+  strong Language:
+  = @book.language
+
+p
+  strong Published:
+  = @book.published
+p  
+  strong Authors:
+  == render @book.authors
+p
+  strong Summary:
+  = @book.summary
+
+h3 Add authors:
+== render 'authors/form'
+
+- if user_signed_in?
+  = link_to "Edit", edit_book_path(@book)
+'|
+=< link_to "Back", books_path

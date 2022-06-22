@@ -1,0 +1,40 @@
+h1 Listing books
+
+table
+  thead
+    tr
+      th Title
+      th Language
+      th Published
+      th
+      th
+      th 
+
+  tbody
+    - @books.each do |book|
+      tr
+        td = book.title
+        td = book.language
+        td = book.published
+        td = link_to "Show", book
+        - if user_signed_in?
+          td = link_to "Edit", edit_book_path(book)
+          td = link_to "Destroy", book, data: {confirm: "Are you sure?"}, method: :delete
+        td  = link_to "Add to Cart", carts_path(patron_id: current_user.), method: :post
+
+br
+
+=> link_to "New Book", new_book_path
+'|
+= link_to 'Search Book', search_books_path
+'|
+
+- if  user_signed_in? 
+  = link_to 'Edit Profile', edit_user_registration_path
+  '|
+  = link_to 'Sign Out', destroy_user_session_path, method: :delete
+- else
+  = link_to 'Sign Up', new_user_registration_path
+  '| 
+  = link_to 'Sign In', new_user_session_path
+

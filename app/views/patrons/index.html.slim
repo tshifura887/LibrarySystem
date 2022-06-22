@@ -1,0 +1,23 @@
+h1 Listing patrons
+
+table
+  thead
+    tr
+      th First name
+      th Last name
+      th
+      th
+      th
+
+  tbody
+    - @patrons.each do |patron|
+      tr
+        td = patron.first_name
+        td = patron.last_name
+        td = link_to "Show", patron
+        td = link_to "Edit", edit_patron_path(patron)
+        td = link_to "Destroy", patron, data: {confirm: "Are you sure?"}, method: :delete
+
+br
+
+= link_to "New Patron", new_patron_path

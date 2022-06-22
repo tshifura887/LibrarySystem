@@ -1,0 +1,20 @@
+h1 Books Requested
+
+table 
+    thead
+        tr
+            th Issue Date
+            th Return Date
+            td Book Tittle
+            th Patron Fullnames
+            th Patron Email
+    tbody
+        = @checkouts.each do |checkout|
+            tr
+                = td checkout.issue_date
+                = td checkout.return_date
+                = td @book_dict[checkout[:book_id]]
+                = td Patron.find(checkout[:patron_id]).first_name + " "+ Patron.find(checkout[:patron_id]).last_name
+                = td Patron.find(checkout[:patron_id]).email
+
+= link_to 'Wiew all Books', books_path

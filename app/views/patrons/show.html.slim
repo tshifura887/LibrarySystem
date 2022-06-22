@@ -1,0 +1,17 @@
+p#notice = notice
+
+p
+  strong First name:
+  = @patron.first_name
+
+p
+  strong Last name:
+  = @patron.last_name
+
+p
+  strong Email:
+  = @patron.email
+
+=> link_to "Edit", edit_patron_path(@patron)
+'|
+=< link_to "Back", patrons_path
