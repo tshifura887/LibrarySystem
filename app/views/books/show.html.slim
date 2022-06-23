@@ -22,6 +22,8 @@ h3 Add authors:
 == render 'authors/form'
 
 - if user_signed_in?
-  = link_to "Edit", edit_book_path(@book)
+  - if current_user.librarian?
+    = link_to "Edit", edit_book_path(@book)
+    = link_to "Delete Book", book_path(@book), method: :delete, data: {confirm: "Are you sure?"}
 '|
 =< link_to "Back", books_path

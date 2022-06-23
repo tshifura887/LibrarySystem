@@ -1,32 +1,23 @@
 class CheckoutsController < ApplicationController
+    def create
+        checkout = Checkout.new(patron_id: params[:patron_id], book_id: params[:book_id], issue_date: DateTime.now.utc, return_date: Time.now + 10.days)
+        if checkout.save  
+            redirect_to checkouts_path
+        else   
+            render :new
+        end
+    end
+
     def index  
-        @checkouts = Checkout.all
-        @book_dict = {}
-        @books = Book.all    
-
-        @patron_dict = {}
-        @patrons = Patron.all
-
-        @books.each do |book|
-            @book_dict[book.id] = book.title
+        if current_user.patron?
+            @checkouts = Checkout.where(patron_id: current_user.id)
+        elsif  current_user.librarian? 
+            @checkouts = Checkout.all
         end
-
-        @patrons.each do |patron|
-            @patron_dict[patron.id] = patron.email
-        end
-
-        @checkouts.each do |checkout|
-            @book = Book.find(checkout[:book_id])
-        end
+            
     end
 
-    def show 
-        @book =  Book.find(params[:id])
-    end
-
-    def returns 
-        @checkout = Checkout.find(params[:id])
-        @book = Book.find(@checkout[:book_id])
-        @patron = Patron.find(@checkout[:patron_id])
+    def returns
+        
     end
 end

@@ -1,6 +1,15 @@
 h3 Books with   Title or Author: 
+= params[:search]
 
+ul
+    - @books.each do |book|
+        li    
+            = link_to book.title, book_path(book)
 
-- @books.each do |book|
-    = book.title
-    = author.name
+ul
+    - @book_authors.each do |book|
+        li
+            = link_to book.title, book_path(book)
+
+br
+= link_to 'books', books_path 

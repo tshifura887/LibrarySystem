@@ -18,16 +18,23 @@ table
         td = book.published
         td = link_to "Show", book
         - if user_signed_in?
-          td = link_to "Edit", edit_book_path(book)
-          td = link_to "Destroy", book, data: {confirm: "Are you sure?"}, method: :delete
-        td  = link_to "Add to Cart", carts_path(patron_id: current_user.), method: :post
+          - if current_user.librarian?
+            td = link_to "Edit", edit_book_path(book)
+            td = link_to "Destroy", book, data: {confirm: "Are you sure?"}, method: :delete
+          - if current_user.patron?
+            td  = link_to "Checkout Book", checkouts_path(patron_id: current_user.id, book_id: book.id), method: :post
 
 br
-
-=> link_to "New Book", new_book_path
-'|
+- if user_signed_in?
+  - if current_user.librarian?
+    = link_to "New Book", new_book_path
+  '|
+  - if user_signed_in?
+    => link_to 'Checkout history', checkouts_path
+  '|
 = link_to 'Search Book', search_books_path
 '|
+
 
 - if  user_signed_in? 
   = link_to 'Edit Profile', edit_user_registration_path

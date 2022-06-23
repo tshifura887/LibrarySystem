@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   get '/checkouts', to: 'checkouts#index', as: 'checkouts'
   get '/book_checkout', to: 'books#book_checkout', as: 'book_checkout'
 
-  resources :carts
+  resources :checkouts
 end
