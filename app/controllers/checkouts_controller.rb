@@ -9,11 +9,14 @@ class CheckoutsController < ApplicationController
     end
 
     def index  
-        if current_user.patron?
-            @checkouts = Checkout.where(patron_id: current_user.id)
-        elsif  current_user.librarian? 
-            @checkouts = Checkout.all
-        end
+        # if current_user.patron?
+        #     @checkouts = Checkout.where(patron_id: current_user.id)
+        #     @books = Book.where.not(id: current_user.checkouts.pluck(:book_id))
+        # elsif  current_user.librarian? 
+        #     @checkouts = Checkout.all
+        # end
+        @checkouts = Checkout.where(patron_id: current_user.id)
+        @books = Book.where.not(id: current_user.checkouts.pluck(:book_id))
             
     end
 

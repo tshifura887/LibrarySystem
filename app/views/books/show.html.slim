@@ -12,18 +12,20 @@ p
   strong Published:
   = @book.published
 p  
-  strong Authors:
+  strong Authors: 
   == render @book.authors
+  |
 p
   strong Summary:
   = @book.summary
 
 h3 Add authors:
 == render 'authors/form'
-
+br
 - if user_signed_in?
   - if current_user.librarian?
-    = link_to "Edit", edit_book_path(@book)
+    => link_to "Edit", edit_book_path(@book)
+    '|
     = link_to "Delete Book", book_path(@book), method: :delete, data: {confirm: "Are you sure?"}
 '|
 =< link_to "Back", books_path

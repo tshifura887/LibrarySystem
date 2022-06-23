@@ -1,4 +1,4 @@
 = form_with model: [@book, @book.authors.build] do |form|
   = form.label :name
   = form.text_field :name
-  = form.submit
+  = form.submit 'Enter Author'

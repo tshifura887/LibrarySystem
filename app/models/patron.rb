@@ -1,3 +1,3 @@
 class Patron < ApplicationRecord
-    has_many :checkouts
+    has_and_belongs_to_many :books
 end
