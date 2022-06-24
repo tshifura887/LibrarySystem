@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   get '/book_checkout', to: 'books#book_checkout', as: 'book_checkout'
 
   resources :checkouts
+
+  get '/overdue_books', to: 'books#overdue_books', as: 'overdue_books'
 end

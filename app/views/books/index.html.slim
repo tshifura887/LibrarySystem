@@ -1,22 +1,20 @@
-h1 Listing books
 
+- if user_signed_in?
+  - if current_user.patron?
+    h1 Available books
+- else
+  h1 Listing books
 table
   thead
     tr
       th Title
-      th Language
-      th Published
       th
       th
-      th 
 
   tbody
     - @books.each do |book|
       tr
-        td = book.title
-        td = book.language
-        td = book.published
-        td = link_to "Show", book
+        td = link_to book.title, book_path(book)
         - if user_signed_in?
           - if current_user.librarian?
             td = link_to "Edit", edit_book_path(book)
@@ -28,8 +26,10 @@ br
 - if user_signed_in?
   - if current_user.librarian?
     = link_to "New Book", new_book_path
+    '|
+    = link_to "Wiew Overdue Books", overdue_books_path
   '|
-  - if user_signed_in?
+  - if current_user.patron?
     => link_to 'Checkout history', checkouts_path
   '|
 = link_to 'Search Book', search_books_path

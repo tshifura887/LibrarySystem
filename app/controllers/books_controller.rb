@@ -2,7 +2,11 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
 
   def index
-    @books = Book.all
+    if current_user.try(:role) == 'User::Patron'
+      @books = Book.where.not(id: current_user.checkouts.pluck(:book_id)) 
+    else   
+      @books = Book.all
+    end
   end
 
   def show
@@ -38,24 +42,11 @@ class BooksController < ApplicationController
     redirect_to books_url, notice: "Book was successfully destroyed."
   end
 
-  def book_request
-    book = Book.find(params[:id])
-    checkout = Checkout.new(book_id: book.id, issue_date: Time.now.getutc)
-
-    if checkout.save(validate: true)
-      flash[:notice]  = "Book titled #{book.name} successfully checked out"
-    else   
-      flash[:notice] = "The book is not available in the library. It is already checked out"
-    end
-
-    redirect_to @books
+  def overdue_books
+    @late_book_ids = Checkout.where('return_date < ?', Time.now).pluck(:book_id)
+    @books = Book.where(id: @late_book_ids)
   end
 
-  def book_return
-    return_row = Checkouts.find_by(book_id: params[:book_id, return_date: nil])
-    return_row.update(return_date: Time.now.getutc)
-    book = Book.find(params[:book_id])
-  end
   private
     
     def set_book
