@@ -6,10 +6,8 @@ table
             th Issue Date
             th Return Date
             th Book Title
-            - if user_signed_in?
-                - if  current_user.librarian?
-                    th Patron First Name 
-                    th Patron Last Name
+            th Returned
+            th Return Book
 
     tbody
         - @checkouts.each do |checkout|
@@ -17,8 +15,6 @@ table
                 td = time_ago_in_words(checkout.issue_date)
                 td = checkout.return_date
                 td = checkout.book.title
-                - if user_signed_in?
-                    - if  current_user.librarian?
-                        td = checkout.patron.first_name
-                        td = checkout.patron.last_name
+                td = checkout.returned
+                td = link_to 'return', return_checkout_path(checkout), { method: :put }
 = link_to 'Wiew all Books', books_path

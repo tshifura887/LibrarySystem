@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_22_084939) do
+ActiveRecord::Schema.define(version: 2022_06_24_084615) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2022_06_22_084939) do
     t.integer "book_id"
     t.date "issue_date"
     t.date "return_date"
+    t.boolean "returned", default: false
     t.index ["book_id"], name: "index_checkouts_on_book_id"
     t.index ["patron_id"], name: "index_checkouts_on_patron_id"
   end

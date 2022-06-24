@@ -1,10 +1,24 @@
 h1 Overdue Books 
-
-- @books.each do |book|
-    ul
-        li
-            = link_to book.title, book_path(book)
-            = book.
-
+table
+    thead 
+        tr
+           th Book Title
+           th Issue Date
+           th Return Date
+           th Patron Fist Name 
+           th Patron Last Name
+           th Email
+    tbody 
+        tbody
+            - @checkouts.each do |checkout|
+                tr
+                    td = checkout.book.title
+                    td = checkout.issue_date
+                    td = checkout.return_date
+                    td = checkout.patron.first_name
+                    td = checkout.patron.last_name
+                    td = checkout.patron.email
+        
+            
 = link_to 'books', books_path 
         

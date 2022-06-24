@@ -9,10 +9,12 @@ Rails.application.routes.draw do
   get '/search', to: 'authors_books#search', as: 'search_books'
   get '/results', to: 'authors_books#results', as: 'search_results'
 
-  get '/checkouts', to: 'checkouts#index', as: 'checkouts'
   get '/book_checkout', to: 'books#book_checkout', as: 'book_checkout'
 
-  resources :checkouts
+  resources :checkouts do
+    put 'return', on: :member
+  end
 
   get '/overdue_books', to: 'books#overdue_books', as: 'overdue_books'
+
 end

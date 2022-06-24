@@ -43,8 +43,7 @@ class BooksController < ApplicationController
   end
 
   def overdue_books
-    @late_book_ids = Checkout.where('return_date < ?', Time.now).pluck(:book_id)
-    @books = Book.where(id: @late_book_ids)
+    @checkouts = Checkout.where(returned: false).where('return_date < ?', Time.now)
   end
 
   private
