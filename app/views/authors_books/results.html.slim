@@ -1,5 +1,4 @@
-h3 Books with   Title or Author: 
-= params[:search]
+h3 Books with   Title or Author: #{params[:search].capitalize}
 
 ul
     - @books.each do |book|
